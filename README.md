@@ -30,17 +30,17 @@ Note that the URL can point to either a ".vba" file, in which case the module is
 
 The optional **version** argument provides a way to restrict the version of the module to be used. If not provided, the most recent version is used.
 
-### Sub RequireVBAOutdated()
+### Function RequireVBA_Outdated() As String
 
-This procedure traverses all RequireVBA-managed modules, pulls the current code from their URLs, and determines whether or not the online version is up to date. It returns a list of packages installed, the installed versions, and the current version online.
+This procedure traverses all RequireVBA-managed modules, pulls the current code from their URLs, and determines whether or not the online version is up to date. It returns a list of packages installed, the installed versions, and the current version online. (still working out if this should return something easy like a string for Immediate use, or a 2D array to make it easier to display to the common user).
 
-### Function RequireVBAUpdate(ByVal *url* As String) As Boolean
+### Function RequireVBA_Update(ByVal *url* As String) As Boolean
 
 This function replaces an existing module with the current version online. If *url* is "*", it will traverse and update all modules in the workbook. It returns **True** if all updates were successful, or **False** if the module at the dependency or any of its own dependencies failed to be updated.
 
 For performance, it is *not* recommended that this be wired to your *Workook_Open()* event. Instead, this could be done based on user initiation, or perhaps on a scheduled basis (say, only check if a date stored on the spreadsheet somewhere is more than a month old, and update that date after calling this and getting a successful response).
 
-## Sub RequireVBALog() As String()
+## Function RequireVBA_Log() As String()
 
 This returns a log of all activity since the workbook was loaded. You can use this to display any issues to the user. The log is a 2-D array, where the rows represent log entries, and the columns are:
   1. Status (OK, Warning, Error, Info, or Debug)
