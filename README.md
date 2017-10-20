@@ -40,7 +40,7 @@ This function replaces an existing module with the current version online. If *u
 
 For performance, it is *not* recommended that this be wired to your *Workook_Open()* event. Instead, this could be done based on user initiation, or perhaps on a scheduled basis (say, only check if a date stored on the spreadsheet somewhere is more than a month old, and update that date after calling this and getting a successful response).
 
-## Function RequireVBA_Log() As String()
+### Function RequireVBA_Log() As String()
 
 This returns a log of all activity since the workbook was loaded. You can use this to display any issues to the user. The log is a 2-D array, where the rows represent log entries, and the columns are:
   1. Status (OK, Warning, Error, Info, or Debug)
