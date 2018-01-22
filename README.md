@@ -49,7 +49,7 @@ While I have to remind myself of the benefits when I'm waiting on `npm install`,
 Dependencies are URL-based, so there is no need for a central "official" repository of modules. Dependencies can be limited to a specific version by putting the requested version **before** the URL, in brackets. Example:
 
 ```VB
-' MODULE_DEPENDENCY: [2.x] https://foo.com/myAwesomeModule.xlsx
+' MODULE_DEPENDENCY: [2.x] https://foo.com/myAwesomeModule.xlsm
 ```
 
 Note that the URL above is still the durable URL of the *current* version, which may be outside the 2.x range. We are relying on the current version to point us to the old versions using its `MODULE_URL_oldversion` headers.
