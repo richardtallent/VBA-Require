@@ -69,6 +69,8 @@ This also allows automatic failure -- if an old version should not be used anymo
 
 ## Naming Modules, methods, and variables
 
+**NOTE: I'm looking into recommending using `PublicNotCreateable` class modules over standard modules, which would solve most global scope pollution issues. Just need to play with that idea before suggesting it here.**
+
 Where possible, variables and methods should be declared `Private`. This helps prevent collisions, and for Subs,  avoids unnecessarily polluting the user's Run Macro dialog with code the module only calls internally.
 
 Public members should be named something explicit enough to prevent collisions with other modules (*e.g.*, don't make a `Public Sub Initialize()`).
@@ -78,9 +80,6 @@ When you refer to methods in your dependencies, you should prefer the `ModuleNam
 For proprietary modules, it is recommended that module names begin with an organization prefix.
 
 Any public function intended to be exposed as a UDF for formulas should be in `ALLCAPS`.
-
-## Class Modules
-I don't believe the first version of this tool will support class modules, since my use cases for those are rare, but I'm open to the idea.
 
 ## History
 --------------------------------
