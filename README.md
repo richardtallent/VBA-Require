@@ -10,7 +10,7 @@ However, developing robust Excel-based applications is a challenge in part becau
 
 ## Status
 
-This is a **rough draft**. There is no code yet.
+This is a **rough draft**. There is very little code so far.
 
 ## Concept
 
