@@ -44,7 +44,7 @@ This header must part of a list of comments at the TOP of the module (before Opt
 
 Required headers:
 
-- ' MODULE_VERSION: (the version of the module, in semver X.Y.Z format)
+- ' MODULE_VERSION: (the version of the module)
 - ' MODULE_URL: (where the current version is hosted)
 - ' MODULE_NAME: (name of the module, not assumed from the URL)
 
