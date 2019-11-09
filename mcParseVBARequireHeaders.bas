@@ -40,6 +40,9 @@ Public Function ParseVBARequireHeaders(ByVal vbaModuleCode As String) As clsVBAR
 					currentHeader = Left$(line, i)
 					' Line now contains the raw value
 					line = LTrim$(Mid$(line, i+1))
+					' Process the header line, and preserve header name
+					' continuation on the next line if allowed
+					If Not ProcessVBARequireHeader(result, currentHeader, line) Then currentHeader = ""
 				Else
 					' Line does not conform to the spec, ignore it
 					Exit Do
@@ -60,16 +63,18 @@ Public Function ParseVBARequireHeaders(ByVal vbaModuleCode As String) As clsVBAR
 
 End Function
 
-Private Function ProcessHeader(ByRef result As clsVBARequireHeader, ByVal currentHeader As String, ByVal value As String) As Boolean
-
+' Returns True if the header was processed successfully AND the header supports multi-line values.
+Private Function ProcessVBARequireHeader(ByRef result As clsVBARequireHeader, ByVal currentHeader As String, ByVal value As String) As Boolean
+	Dim result As Boolean
+	result = True
 	Select Case currentHeader
 
 		' Headers that only support a single value will overwrite with each new line
-		Case "VERSION": result.Version = value
-		Case "URL": result.URL = value
-		Case "NAME": result.Name = value
-		Case "HOMEPAGE": result.HomePage = value
-		case "LICENSE": result.License = value
+		Case "VERSION": result.Version = value: result = False
+		Case "URL": result.URL = value: result = False
+		Case "NAME": result.Name = value: result = False
+		Case "HOMEPAGE": result.HomePage = value: result = False
+		case "LICENSE": result.License = value: result = False
 
 		' These header may have multi-line values, but as a single value. The word-wrapping locations
 		' are preserved.
@@ -80,10 +85,11 @@ Private Function ProcessHeader(ByRef result As clsVBARequireHeader, ByVal curren
 		Case "NOTES": AddStringLine(result.Notes, value)
 		Case "USAGE": AddStringLine(result.Usage, value)
 
-		' These headers should have a single line with a comma-delimited set of values
-		Case "SCOPE_METHODS_NEEDED": result.ScopeMethodsNeeded = SplitCommaDelimitedString(value)
-		Case "SCOPE_VARIABLES_NEEDED": result.ScopeVariablesNeeded = SplitCommaDelimitedString(value)
-		Case "SCOPE_RANGES_NEEDED": result.ScopeRangesNeeded = SplitCommaDelimitedString(value)
+		' These headers should always have a single line with a comma-delimited set of values
+		' FUTURE: Perhaps support multiple lines so long lists can be word-wrapped?
+		Case "SCOPE_METHODS_NEEDED": result.ScopeMethodsNeeded = SplitCommaDelimitedString(value): result = False
+		Case "SCOPE_VARIABLES_NEEDED": result.ScopeVariablesNeeded = SplitCommaDelimitedString(value): result = False
+		Case "SCOPE_RANGES_NEEDED": result.ScopeRangesNeeded = SplitCommaDelimitedString(value): result = False
 
 		' This should be stored as a 2D array, where the first dimension is 0=URL, 1=optional version,
 		' and the second is the index for the dependency. Each dependency must have its own line.
@@ -97,6 +103,9 @@ Private Function ProcessHeader(ByRef result As clsVBARequireHeader, ByVal curren
 		' to the previous Note. Version numbers should be validated as either x.y... or yyyy-mm-dd.
 		Case "HISTORY"
 			' TBD
+
+		Case Else
+			result = False
 
 	End Select
 
