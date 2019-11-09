@@ -32,10 +32,6 @@ Since the publication URL can be private or public, VBA-Require can be easily us
 
 _(Note: my primary use case is Excel. I realize other developers may be creating VBA macros in Access, Word, PowerPoint, etc. I'm not against providing support for other Office document types, if there's a demonstrated need.)_
 
-## Naming Modules
-
-I have no strong opinions about how modules should be named. My personal convention is to use camelCase, with an "m" prefix for workbook-specific modules and "mc" for "common" modules reusable by many workbooks. YMMV.
-
 ## Metadata
 
 Since VBA doesn't provide a native metadata structure for modules (where we can declare the version, license, dependencies, etc.), VBA-Require provides a _convention-based_ mechanism using code comments in the header of a module to provide this information.
@@ -111,13 +107,13 @@ This also allows automatic failure -- if an old version should not be used anymo
 
 **NOTE: I'm looking into recommending using `PublicNotCreateable` class modules over standard modules, which would solve most global scope pollution issues. Just need to play with that idea before suggesting it here.**
 
+I have no strong opinions about how modules should be named. My personal convention is to use camelCase, with an "m" prefix for workbook-specific modules and "mc" for "common" modules reusable by many workbooks. YMMV. For proprietary modules, it is recommended that module names begin with an organization prefix.
+
 Where possible, variables and methods should be declared `Private`. This helps prevent collisions, and for Subs, avoids unnecessarily polluting the user's Run Macro dialog with code the module only calls internally.
 
 Public members should be named something explicit enough to prevent collisions with other modules (_e.g._, don't make a `Public Sub Initialize()`).
 
-When you refer to methods in your dependencies, consider using the `ModuleName.MethodName` form so VBA knows precisely which method you're calling, even if there is an accidental collision.
-
-For proprietary modules, it is recommended that module names begin with an organization prefix.
+When you refer to methods in your dependencies, consider using the `moduleName.MethodName` form so VBA knows precisely which method you're calling, even if there is an accidental collision.
 
 Any public function intended to be exposed as a UDF for formulas should be in `ALLCAPS`.
 
