@@ -1,6 +1,7 @@
 ' ******************************************************************************************************************
 ' MODULE_NAME: mcParseVBARequireHeaders
 ' MODULE_VERSION: 2019-11-09
+' MODULE_URL: https://raw.githubusercontent.com/richardtallent/VBA-Require/master/mcParseVBARequireHeaders.bas
 ' MODULE_DESCRIPTION: Parses a BAS module's code (provided as a string) returns an instance of clsVBARequireHeader
 ' populated with the information.
 ' MODULE_HISTORY:
